@@ -8,7 +8,12 @@ from .forms import BlogCreationForm
 
 @login_required
 def index(request):
-    blogs = request.user.created_blogs
+    created_blogs = list(request.user.created_blogs.order_by('-date_created'))
+    authored_blogs = [
+        blog for blog in request.user.authored_blogs.order_by('-date_created')
+        if blog not in created_blogs
+    ]
+    blogs = created_blogs + authored_blogs
     context = {
         'blogs': blogs,
     }

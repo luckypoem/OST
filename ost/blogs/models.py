@@ -11,6 +11,7 @@ class Blog(models.Model):
     creator = models.ForeignKey(User, related_name="created_blogs")
     authors = models.ManyToManyField(User, related_name="authored_blogs")
     followers = models.ManyToManyField(User, related_name="followed_blogs")
+    date_created = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         self.slug = uuslug(self.name, instance=self)

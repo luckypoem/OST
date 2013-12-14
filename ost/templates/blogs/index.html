@@ -2,7 +2,8 @@
 {% block title %}Blogs{% endblock %}
 {% block content %}
 
-<h3 style="color:#428bca">Created Blogs</h3>
-
-<h3 style="color:#428bca">Authored Blogs</h3>
+<h3 style="color:#428bca">Your Blogs</h3>
+{% for blog in blogs %}
+  <a href="{% url 'blog' slug=blog.slug %}">{{ blog.name }}</a>
+{% endfor %}
 {% endblock %}

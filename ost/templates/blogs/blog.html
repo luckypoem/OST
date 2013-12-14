@@ -6,10 +6,17 @@
   <div class="list-group">
     <li class="list-group-item list-group-header"><h3 class="list-group-header" style="color:#fff">Blog{% include "blogs/blog/status.html" %}</h3></li>
     {% if blog %}
-      <a class="list-group-item {% if request.path == blogs_create_url %}active{% endif %}" href="{% url 'blogs:create' %}">Settings</a>
-      <a class="list-group-item {% if request.path == blogs_following_url %}active{% endif %}" href="{% url 'blogs:following' %}">Follow</a>
+      {% if request.user == blog.creator %}
+        <a class="list-group-item" href="#">Settings</a>
+        <a class="list-group-item" href="#">Post</a>
+      {% elif request.user in blog.authors.all %}
+        <a class="list-group-item" href="#">Post</a>
+      {% else %}
+        <a class="list-group-item" href="#">Follow</a>
+      {% endif %}
+
     {% else %}
-      <a class="list-group-item {% if request.path == blogs_create_url %}active{% endif %}" href="{% url 'blogs:create' %}">Create</a>
+      <a class="list-group-item" href="{% url 'blogs:create' %}">Create</a>
     {% endif %}
   </div>
 </div>

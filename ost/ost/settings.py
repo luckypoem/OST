@@ -138,6 +138,7 @@ INSTALLED_APPS = (
     'djangobower',
     'ckeditor',
     'missing',
+    'south',
     'taggit',
     'blogs',
 
