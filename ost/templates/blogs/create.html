@@ -1,8 +1,21 @@
 {% extends "blogs/base.html" %}
-{% block title %}Blogs{% endblock %}
+{% block title %}Create Blog{% endblock %}
 {% block content %}
-
-<h3 style="color:#428bca">Create a new blog</h3>
-
-
+<h3 style="color:#428bca">Create Blog</h3>
+<div class="col-md-6">
+  <form class="form-horizontal" method="post" action="{% url 'blogs:create' %}">
+{% if form.errors %}
+  {{ form.non_field_errors }}
+{% endif %}
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="id_name" class="col-md-4 control-label">Name</label>
+    {{ form.name.errors }}
+    <div class="col-md-6">
+    <input name="name" id="id_name" type="text" class="form-control" placeholder="{{ form.name.label }}" required autofocus>
+    </div>
+  </div>
+  <button class="btn btn-large btn-primary" type="submit">Create</button>
+  </form>
+</div>
 {% endblock %}

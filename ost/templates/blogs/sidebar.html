@@ -1,9 +1,9 @@
-<div class="panel panel-primary" style="margin: 1em 0">
-  <div class="panel-heading">
-    <h4 class="panel-title">My Blogs</h4>
+{% url 'blogs:create' as blogs_create_url %}
+{% url 'blogs:following' as blogs_following_url %}
+<div style="margin: 1em 0">
+  <div class="list-group">
+    <li class="list-group-item list-group-header"><h3 class="list-group-header" style="color:#fff">Blogs</h3></li>
+    <a class="list-group-item {% if request.path == blogs_create_url %}active{% endif %}" href="{% url 'blogs:create' %}">Create</a>
+    <a class="list-group-item {% if request.path == blogs_following_url %}active{% endif %}" href="{% url 'blogs:following' %}">Following</a>
   </div>
-  <ul class="nav nav-pills nav-stacked">
-    <li><a href="{% url 'blogs:create' %}">Create</a></li>
-    <li><a href="{% url 'blogs:following' %}">Following</a></li>
-  </ul>
 </div>

@@ -14,5 +14,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^ckeditor/', include('ckeditor.urls')),
     url(r'^blogs/', include('blogs.urls', namespace='blogs')),
+    url(r'^blog/(?P<slug>[\w.@+-]+)/$', 'blogs.views.blog', name="blog"),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

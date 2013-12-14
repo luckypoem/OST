@@ -1,0 +1,6 @@
+ {# This space is need #}
+{% if request.user == blog.creator %}
+(Created)
+{% elif request.user in blog.authors.all %}
+(Authored)
+{% endif %}

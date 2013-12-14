@@ -137,6 +137,10 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'djangobower',
     'ckeditor',
+    'missing',
+    'taggit',
+    'blogs',
+
 )
 
 # A sample logging configuration. The only tangible logging

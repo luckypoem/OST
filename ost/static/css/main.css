@@ -94,3 +94,11 @@ h6,
 .fluid-container {
     background-color: #ffffff;
 }
+
+h3.list-group-header {
+    margin: 0;
+
+}
+li.list-group-header {
+    background: #ccc;
+}
