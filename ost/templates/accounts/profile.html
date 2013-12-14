@@ -1,0 +1,21 @@
+{% extends "accounts/base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+
+<h3 style="color:#428bca">{{ request.user.username }}</h3>
+<div class="col-md-8">
+  <dl class="dl-horizontal">
+    <dt>Username</dt>
+    <dd>{{ request.user.username }}</dd>
+    <dt>Email</dt>
+    <dd>{{ request.user.email }}</dd>
+    <dt>Date joined</dt>
+    <dd>{{ request.user.date_joined }}</dd>
+    {% if social_auth %}
+      <dt>Social account</dt>
+      <dd>{{ social_auth.provider|capfirst }}</dd>
+    {% endif %}
+  </dl>
+</div>
+
+{% endblock %}
