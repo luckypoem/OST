@@ -1,0 +1,16 @@
+{% extends "posts/base.html" %}
+{% load static %}
+{% block css %}
+{% endblock %}
+{% block title %}{{ post.title }} - {{ blog.name }}{% endblock %}
+
+{% block content %}
+<h3 style="color:#428bca">{{ post.title }}</h3>
+
+{{ post.content|safe }}
+
+{% endblock %}
+
+{% block javascript %}
+  
+{% endblock %}

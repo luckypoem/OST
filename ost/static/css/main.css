@@ -106,3 +106,8 @@ li.list-group-header {
 button.remove-button {
     margin: 0 4px 2px 0;
 }
+
+img {
+    max-width: 500px;
+    max-height: 500px;
+}

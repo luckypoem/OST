@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from blogs.views import blog as blog_view
-from blogs.models import Blog
+from blogs.models import Blog, Post
 from .forms import PostForm
 
 
@@ -34,6 +34,7 @@ def create(request, slug):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            post.blog = blog
             post.save()
             form.save_m2m()
             return HttpResponseRedirect(
@@ -50,6 +51,21 @@ def tag(request):
     pass
 
 
-def post(request):
+def post(request, blog_slug, post_slug):
     """Individual post page: /blogs/<slug>/post/<post_slug>"""
-    pass
+    try:
+        blog = Blog.objects.get(slug=blog_slug)
+    except:
+        return HttpResponseRedirect(
+            reverse('blog', kwargs={'slug': blog.slug}))
+    try:
+        post = Post.objects.get(slug=post_slug)
+    except:
+        return HttpResponseRedirect(
+            reverse('blog', kwargs={'slug': blog.slug}))
+
+    context = {}
+    context['blog'] = blog
+    context['post'] = post
+    return render(request, "posts/post.html", context)
+
