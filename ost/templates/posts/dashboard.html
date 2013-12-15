@@ -1,0 +1,15 @@
+{% extends "posts/base.html" %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h3 style="color:#428bca">Dashboard</h3>
+<p class="text-muted">Edit Posts<p>
+<div class="col-md-8">
+  <ul class="list-group">
+    {% for post in posts %}
+      <a href="{% url 'edit' blog_slug=blog.slug post_slug=post.slug %}" class="list-group-item">{{ post.title }}</a>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endblock %}

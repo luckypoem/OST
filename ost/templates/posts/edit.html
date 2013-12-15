@@ -1,0 +1,50 @@
+{% extends "posts/base.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static "bootstrap-tagsinput/dist/bootstrap-tagsinput.css" %}">
+  <link rel="stylesheet" href="{% static "css/typeahead.css" %}">
+  <script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+{% endblock %}
+{% block title %}Edit Post{% endblock %}
+
+{% block content %}
+<h3 style="color:#428bca">Edit Post &ldquo;{{ form.instance.title }}&rdquo;</h3>
+<div class="col-md-12">
+  <form class="form-horizontal" method="post" action="{% url 'edit' blog_slug=blog.slug post_slug=form.instance.slug %}">
+{% if form.errors %}
+  {{ form.non_field_errors }}
+{% endif %}
+  {% csrf_token %}
+  <div class="form-group">
+    {{ form.title.errors }}
+    <div class="col-md-12">
+    <input name="title" id="id_name" type="text" class="form-control" placeholder="{{ form.title.label }}" required autofocus value="{{ form.instance.title }}" >
+    </div>
+  </div>
+  <div class="form-group">
+    {{ form.content.errors }}
+    <div class="col-sm-12">
+      {{ form.content }}
+    </div>
+  </div>
+  <div class="form-group">
+    {{ form.tags.errors }}
+    <div class="col-sm-12">
+      <input name="tags" id="id_tags" type="text" value="Amsterdam,Washington,Sydney,Beijing,Cairo" data-role="tagsinput" placeholder="Enter a tag name"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-large btn-primary" type="submit">Save</button>
+    <a href="{% url 'post' blog_slug=blog.slug post_slug=form.instance.slug %}" class="btn btn-danger" role="button">Cancel</a>
+  </div>
+  </form>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static 'typeahead.js/dist/typeahead.min.js' %}"></script>
+  <script src="{% static 'bootstrap-tagsinput/dist/bootstrap-tagsinput.js' %}"></script>
+  
+  {% include "posts/js/tags.html" %}
+{% endblock %}
