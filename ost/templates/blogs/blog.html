@@ -1,13 +1,1 @@
-{% extends "fluid.html" %}
-{% block title %}{{ blog.name }}{% endblock %}
-{% block sidebar %}
-  {% include "blogs/blog_sidebar.html" %}
-{% endblock %}
-{% block content %}
-  {% if blog %}
-    <h3 style="color:#428bca">{{ blog.name }}</h3>
-  {% else %}
-    <h3 style="color:#428bca">Oops. This Blog Does Not Exist.</h3>
-    <p>You can <a href="/">take a look at existing blogs</a> or <a href="{% url 'blogs:create' %}">create a new one</a> of your own</p>
-  {% endif %}
-{% endblock %}
+{# Moved to "posts/index.html" #}

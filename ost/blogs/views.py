@@ -1,8 +1,9 @@
+from bs4 import BeautifulSoup
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from .models import Blog
+from .models import Blog, Post
 from .forms import BlogCreationForm
 
 
@@ -45,14 +46,19 @@ def following(request):
 
 
 def blog(request, slug):
-    """Individual blog view"""
+    """Individual blog view, showing all posts contained"""
     context = {}
     try:
         blog = Blog.objects.get(slug=slug)
     except:
         blog = None
     context['blog'] = blog
-    return render(request, "blogs/blog.html", context)
+    if blog:
+        posts = Post.objects.filter(blog=blog)
+        for post in posts:
+            post.plain = BeautifulSoup(post.content).get_text()
+        context['posts'] = posts
+    return render(request, "posts/index.html", context)
 
 
 @login_required

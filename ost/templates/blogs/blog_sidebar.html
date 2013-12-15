@@ -7,8 +7,10 @@
       {% if request.user == blog.creator %}
         <a class="list-group-item" href="{% url 'settings' slug=blog.slug %}">Settings</a>
         <a class="list-group-item" href="{% url 'posts:create' slug=blog.slug %}">Post</a>
+        <a class="list-group-item" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
       {% elif request.user in blog.authors.all %}
         <a class="list-group-item" href="{% url 'posts:create' slug=blog.slug %}">Post</a>
+        <a class="list-group-item" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
       {% else %}
         <a class="list-group-item" href="{% url 'settings' slug=blog.slug %}">Follow</a>
       {% endif %}

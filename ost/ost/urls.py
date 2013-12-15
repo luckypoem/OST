@@ -27,5 +27,7 @@ urlpatterns = patterns('',
         include('posts.urls', namespace='posts')),
     url(r'^blog/(?P<blog_slug>[\w.@+-]+)/post/(?P<post_slug>[\w.@+-]+)/$',
         'posts.views.post', name='post'),
+    url(r'^blog/(?P<blog_slug>[\w.@+-]+)/post/(?P<post_slug>[\w.@+-]+)/edit/$',
+        'posts.views.edit', name='edit'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

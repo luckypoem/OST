@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from uuslug import uuslug
 from taggit.managers import TaggableManager
+from django.core.urlresolvers import reverse
 
 
 class Blog(models.Model):
@@ -18,7 +19,7 @@ class Blog(models.Model):
         super(Blog, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.name
+        return self.slug
 
 
 class Post(models.Model):
@@ -26,8 +27,8 @@ class Post(models.Model):
     blog = models.ForeignKey(Blog)
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
-    content = RichTextField()
-    tags = TaggableManager()
+    content = RichTextField(blank=True)
+    tags = TaggableManager()  # Automatically store comma-separated tags
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
@@ -35,5 +36,8 @@ class Post(models.Model):
         self.slug = uuslug(self.title, instance=self)
         super(Post, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('post', args=(self.blog.slug, self.slug))
+
     def __unicode__(self):
-        return self.name
+        return self.slug

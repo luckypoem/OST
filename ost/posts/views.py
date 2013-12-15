@@ -10,10 +10,9 @@ from .forms import PostForm
 
 def index(request, slug):
     """
-    Alias of blogs.view.blog
-    Global portal: /blogs/<blog_slug>/posts/
+    Redirected to blogs.view.blog
     """
-    return blog_view(request, slug)
+    return HttpResponseRedirect(reverse('blog', kwargs={'slug': slug}))
 
 
 @login_required
@@ -47,8 +46,22 @@ def create(request, slug):
     return render(request, "posts/create.html", context)
 
 
-def tag(request):
-    pass
+def dashboard(request, slug):
+    """Global portal: /blogs/<slug>/posts/dashboard/"""
+    try:
+        blog = Blog.objects.get(slug=slug)
+    except:
+        return HttpResponseRedirect(
+            reverse('blog', kwargs={'slug': blog.slug}))
+
+    if request.user not in blog.authors.all():
+        raise PermissionDenied
+
+    context = {}
+    posts = Post.objects.filter(blog=blog)
+    context['blog'] = blog
+    context['posts'] = posts
+    return render(request, "posts/dashboard.html", context)
 
 
 def post(request, blog_slug, post_slug):
@@ -69,3 +82,35 @@ def post(request, blog_slug, post_slug):
     context['post'] = post
     return render(request, "posts/post.html", context)
 
+
+@login_required
+def edit(request, blog_slug, post_slug):
+    """Individual post edit page: /blogs/<slug>/post/<post_slug>/edit/"""
+    try:
+        blog = Blog.objects.get(slug=blog_slug)
+    except:
+        return HttpResponseRedirect(
+            reverse('blog', kwargs={'slug': blog.slug}))
+    try:
+        post = Post.objects.get(slug=post_slug)
+    except:
+        return HttpResponseRedirect(
+            reverse('blog', kwargs={'slug': blog.slug}))
+
+    if request.user not in blog.authors.all():
+        raise PermissionDenied
+
+    context = {}
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(
+                reverse('post', kwargs={'blog_slug': blog.slug,
+                                        'post_slug': post.slug}))
+    else:
+        form = PostForm(instance=post)
+        print form.instance.title
+    context['blog'] = blog
+    context['form'] = form
+    return render(request, "posts/edit.html", context)
