@@ -4,7 +4,8 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from blogs.views import blog as blog_view
-from blog.models import Blog
+from blogs.models import Blog
+from .forms import PostForm
 
 
 def index(request, slug):
@@ -28,6 +29,20 @@ def create(request, slug):
         raise PermissionDenied
 
     context = {}
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            form.save_m2m()
+            return HttpResponseRedirect(
+                reverse('post', kwargs={'blog_slug': blog.slug,
+                                        'post_slug': post.slug}))
+    else:
+        form = PostForm()
+    context['blog'] = blog
+    context['form'] = form
     return render(request, "posts/create.html", context)
 
 

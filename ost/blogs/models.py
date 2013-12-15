@@ -32,8 +32,8 @@ class Post(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
-        self.slug = uuslug(self.name, instance=self)
-        super(Blog, self).save(*args, **kwargs)
+        self.slug = uuslug(self.title, instance=self)
+        super(Post, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
