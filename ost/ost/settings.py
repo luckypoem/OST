@@ -181,6 +181,7 @@ BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_PATH, 'components')
 
 BOWER_INSTALLED_APPS = (
     'bootstrap-hover-dropdown',
+    'typeahead.js',
 )
 
 CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_ROOT, 'uploads')

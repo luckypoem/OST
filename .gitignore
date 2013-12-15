@@ -3,3 +3,6 @@
 
 settings_production.py
 migrations
+ost/components/bower_components/bootstrap/
+ost/components/bower_components/jquery/
+

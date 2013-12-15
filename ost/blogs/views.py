@@ -44,11 +44,9 @@ def following(request):
     return None
 
 
-def blog(request, slug=None):
+def blog(request, slug):
     """Individual blog view"""
     context = {}
-    if slug is None:
-        return HttpResponseRedirect('/')
     try:
         blog = Blog.objects.get(slug=slug)
     except:
@@ -57,5 +55,33 @@ def blog(request, slug=None):
     return render(request, "blogs/blog.html", context)
 
 
-def post(request, blog_slug, post_slug):
-    return None
+@login_required
+def settings(request, slug):
+    try:
+        blog = Blog.objects.get(slug=slug)
+    except:
+        return HttpResponseRedirect(
+            reverse('blog', kwargs={'slug': blog.slug}))
+    context = {}
+    if request.method == 'POST':
+        print request.POST
+        form = BlogCreationForm(request.POST, instance=blog)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(
+                reverse('blog', kwargs={'slug': blog.slug}))
+    else:
+        form = BlogCreationForm(instance=blog)
+    context['form'] = form
+    context['blog'] = blog
+    return render(request, "blogs/settings.html", context)
+
+
+@login_required
+def follow(request):
+    pass
+
+
+@login_required
+def unfollow(request):
+    pass

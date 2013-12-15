@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django.contrib.auth.views.logout_then_login', name="logout"),
     url(r'^profile/$', 'accounts.views.profile', name="profile"),
     url(r'^page/(?P<username>[\w.@+-]+)/$', 'accounts.views.page', name="page"),
+    url(r'^query/users/$', 'accounts.ajax.users', name="users"),
 )

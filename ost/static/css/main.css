@@ -102,3 +102,7 @@ h3.list-group-header {
 li.list-group-header {
     background: #ccc;
 }
+
+button.remove-button {
+    margin: 0 4px 2px 0;
+}

@@ -1,25 +1,7 @@
 {% extends "fluid.html" %}
+{% block title %}{{ blog.name }}{% endblock %}
 {% block sidebar %}
-{% url 'blogs:create' as blogs_create_url %}
-{% url 'blogs:following' as blogs_following_url %}
-<div style="margin: 1em 0">
-  <div class="list-group">
-    <li class="list-group-item list-group-header"><h3 class="list-group-header" style="color:#fff">Blog{% include "blogs/blog/status.html" %}</h3></li>
-    {% if blog %}
-      {% if request.user == blog.creator %}
-        <a class="list-group-item" href="#">Settings</a>
-        <a class="list-group-item" href="#">Post</a>
-      {% elif request.user in blog.authors.all %}
-        <a class="list-group-item" href="#">Post</a>
-      {% else %}
-        <a class="list-group-item" href="#">Follow</a>
-      {% endif %}
-
-    {% else %}
-      <a class="list-group-item" href="{% url 'blogs:create' %}">Create</a>
-    {% endif %}
-  </div>
-</div>
+  {% include "blogs/blog_sidebar.html" %}
 {% endblock %}
 {% block content %}
   {% if blog %}

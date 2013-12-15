@@ -1,0 +1,60 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static "css/typeahead.css" %}">
+
+{% endblock %}
+{% block title %}Blog Settings{% endblock %}
+{% block sidebar %}
+  {% include "blogs/blog_sidebar.html" %}
+{% endblock %}
+{% block content %}
+<h3 style="color:#428bca">Blog Settings</h3>
+<div class="col-md-6">
+  <form class="form-horizontal" method="post" action="{% url 'settings' slug=blog.slug %}">
+{% if form.errors %}
+  {{ form.non_field_errors }}
+{% endif %}
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="id_name" class="col-md-4 control-label">Name</label>
+    
+    <div class="col-md-6">
+    {{ form.name.errors }}
+    <input name="name" id="id_name" type="text" class="form-control" placeholder="{{ form.name.label }}" required autofocus value="{{ form.instance.name }}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="id_authors" class="col-md-4 control-label">Authors</label>
+    <div class="col-md-6">
+      <div class="input-group">
+        <input id="id_authors" type="text" class="form-control" placeholder="Username">
+        <span class="input-group-btn">
+          <button type="button" id="add-authors" class="btn btn-primary">Add</button>
+        </span>
+      </div>
+      <span id="authors-errors" class="text-danger"></span>
+    </div>
+    
+  </div>
+  <div class="form-group">
+    <div class="col-md-6 col-md-offset-4">
+      <span id="authors-list"></span>
+    </div>
+    
+  </div>
+  <div class="form-group">
+    <div class="col-md-6 col-md-offset-2">
+      <button class="btn btn-large btn-primary" type="submit">Save</button>
+    </div>
+  </div>
+  </form>
+</div>
+{% endblock %}
+{% block javascript %}
+  <script src="{% static 'sprintf/src/sprintf.js' %}"></script>
+  <script src="{% static 'typeahead.js/dist/typeahead.min.js' %}"></script>
+  <script src="{% static 'hogan/web/builds/2.0.0/hogan-2.0.0.min.js' %}"></script>
+  {% include "blogs/js/authors.html" %}
+  {% include "ajax_token.html" %}
+{% endblock %}
