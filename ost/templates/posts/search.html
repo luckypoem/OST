@@ -1,0 +1,16 @@
+{% extends "posts/base.html" %}
+{% load static %}
+{% block css %}
+{% endblock %}
+{% block title %}Search Result{% endblock %}
+{% block sidebar %}
+  {% include "blogs/blog_sidebar.html" %}
+{% endblock %}
+{% block content %}
+ <h3 style="color:#428bca">Search Result of {{ query }} From {{ blog.name }}</h3>
+  {% if posts %}
+    {% include "posts/aggregate.html" %}
+  {% else %}
+    <p>No results.</p>
+  {% endif %}
+{% endblock %}

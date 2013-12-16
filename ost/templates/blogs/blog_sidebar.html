@@ -16,7 +16,7 @@
         <a class="list-group-item {% if request.path == dashboard_url %}active{% endif %}" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
         <a class="list-group-item success {% if request.path == create_url %}active{% endif %}" href="{% url 'posts:create' slug=blog.slug %}">Create Post</a>
       {% else %}
-        <a class="list-group-item {% if request.path == blog_url %}active{% endif %}" href="{% url 'posts:create' slug=blog.slug %}" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
+        <a class="list-group-item {% if request.path == blog_url %}active{% endif %}" href="{% url 'blog' slug=blog.slug %}" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
         {% if request.user.is_follower %}
           <a href="#" id="unfollow-button" class="list-group-item">Unfollow This Blog</a>
         {% else %}

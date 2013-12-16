@@ -3,9 +3,9 @@
 {% load pagination_tags %}
 {% block title %}Your Blogs{% endblock %}
 {% block content %}
-{% autopaginate blogs 5 %}
+{% autopaginate blogs %}
 <h3 style="color:#428bca">Your Blogs</h3>
-<p class="text-muted">Edit Posts<p>
+<p class="text-muted">Manage Blogs<p>
 <div class="col-md-12">
   <table class="table">
     {% if not invalid_page and blogs %}

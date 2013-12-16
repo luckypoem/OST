@@ -24,6 +24,8 @@ urlpatterns = patterns('',
         name='follow'),  # Ajax
     url(r'^blog/(?P<slug>[\w.@+-]+)/unfollow/$', 'blogs.ajax.unfollow',
         name='unfollow'),  # Ajax
+    url(r'^blog/(?P<slug>[\w.@+-]+)/search/$', 'blogs.views.search',
+        name='search'),
     url(r'^blog/(?P<slug>[\w.@+-]+)/posts/',
         include('posts.urls', namespace='posts')),
     url(r'^blog/(?P<blog_slug>[\w.@+-]+)/post/(?P<post_slug>[\w.@+-]+)/$',

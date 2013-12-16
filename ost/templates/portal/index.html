@@ -8,7 +8,16 @@
 {% load pagination_tags %}
 {% load wrap_tags %}
 {% block content %}
-{% autopaginate posts 5 %}
+{% autopaginate posts %}
+{% if not request.user.is_authenticated %}
+<div class="row">
+  <div class="jumbotron" style="text-align:center">
+    <h2>Welcome To OST Blogger</h2>
+    <p class="lead">You can start by creating your own blogs.</p>
+    <p><a class="btn btn-lg btn-success" href="{% url 'accounts:signup' %}" role="button">Sign up today</a></p>
+  </div>
+</div>
+{% endif %}
 {% for post in posts %}
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -51,6 +60,8 @@
 {% empty %}
   {% if invalid_page %}
     <p>Invalid page.</p>
+  {% else %}
+    <p>No posts have been created.</p>
   {% endif %}
 {% endfor %}
 {% paginate %}

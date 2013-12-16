@@ -17,7 +17,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'ost',                      # Or path to database file if using sqlite3.
+        'NAME': 'ost2',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'root',
         'PASSWORD': 'root',
@@ -198,4 +198,4 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-#PAGINATION_INVALID_PAGE_RAISES_404 = True
+PAGINATION_DEFAULT_PAGINATION = 10

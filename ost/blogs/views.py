@@ -106,3 +106,16 @@ def settings(request, slug):
     context['form'] = form
     context['blog'] = blog
     return render(request, "blogs/settings.html", context)
+
+
+def search(request, slug):
+    try:
+        blog = Blog.objects.get(slug=slug)
+    except:
+        return HttpResponseRedirect(
+            reverse('blog', kwargs={'slug': blog.slug}))
+    query = request.GET.get('query')
+    posts = Post.objects.filter(blog=blog, content__search=query)
+    wrap_plain(posts)
+    context = {'posts': posts, 'blog': blog, 'query': query}
+    return render(request, "posts/search.html", context)
