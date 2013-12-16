@@ -34,6 +34,13 @@ def create(request):
             form.save_m2m()
             return HttpResponseRedirect(
                 reverse('blog', kwargs={'slug': blog.slug}))
+        else:
+            # Retain POST data if invalid
+            data = {
+                'name': request.POST.get('name'),
+            }
+            form.initial = data
+            context['form'] = form
     else:
         form = BlogCreationForm()
     context['form'] = form
@@ -77,6 +84,13 @@ def settings(request, slug):
             form.save()
             return HttpResponseRedirect(
                 reverse('blog', kwargs={'slug': blog.slug}))
+        else:
+            # Retain POST data if invalid
+            data = {
+                'name': request.POST.get('name'),
+            }
+            form = BlogCreationForm(initial=data)
+            context['form'] = form
     else:
         form = BlogCreationForm(instance=blog)
     context['form'] = form

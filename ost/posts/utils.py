@@ -1,9 +1,11 @@
 from bs4 import BeautifulSoup
+import re
 
 
 def wrap_plain(posts):
     for post in posts:
-        post.plain = BeautifulSoup(post.content).get_text()
+        plain = BeautifulSoup(post.content).get_text()
+        post.plain = re.sub(r'\n+', '\n\n', plain)  # Collapse multi-lines
 
 
 def wrap_tags(post):

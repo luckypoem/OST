@@ -41,6 +41,13 @@ def create(request, slug):
             return HttpResponseRedirect(
                 reverse('post', kwargs={'blog_slug': blog.slug,
                                         'post_slug': post.slug}))
+        else:
+            # Retain POST data and errors if invalid
+            initial = {
+                'title': request.POST.get('title'),
+                'tags': request.POST.get('tags'),
+            }
+            form.initial = initial
     else:
         form = PostForm()
     context['blog'] = blog
@@ -104,6 +111,10 @@ def edit(request, blog_slug, post_slug):
         raise PermissionDenied
 
     context = {}
+    initial = {
+        'title': post.title,
+        'tags': ','.join([t.name for t in post.tags.all()]),
+    }
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
@@ -111,9 +122,16 @@ def edit(request, blog_slug, post_slug):
             return HttpResponseRedirect(
                 reverse('post', kwargs={'blog_slug': blog.slug,
                                         'post_slug': post.slug}))
+        else:
+            # Retain POST data and errors if invalid
+            initial = {
+                'title': request.POST.get('title'),
+                'tags': request.POST.get('tags'),
+            }
+            form.initial = initial
     else:
         form = PostForm(instance=post)
-        print form.instance.title
+        form.initial = initial
     context['blog'] = blog
     context['form'] = form
     return render(request, "posts/edit.html", context)
