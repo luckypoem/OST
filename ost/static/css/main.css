@@ -111,3 +111,7 @@ img {
     max-width: 500px;
     max-height: 500px;
 }
+
+.post_content {
+    margin: 1em 0;
+}

@@ -29,5 +29,7 @@ urlpatterns = patterns('',
         'posts.views.post', name='post'),
     url(r'^blog/(?P<blog_slug>[\w.@+-]+)/post/(?P<post_slug>[\w.@+-]+)/edit/$',
         'posts.views.edit', name='edit'),
+    url(r'^blog/(?P<blog_slug>[\w.@+-]+)/tag/(?P<tag_slug>[\w.@+-]+)/$',
+        'posts.views.tag', name='tag'),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

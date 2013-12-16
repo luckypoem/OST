@@ -5,10 +5,15 @@
 {% block title %}{{ post.title }} - {{ blog.name }}{% endblock %}
 
 {% block content %}
-<h3 style="color:#428bca">{{ post.title }} {% if request.user in blog.authors.all %}<small><a href="{% url 'edit' blog_slug=blog.slug post_slug=post.slug %}" class="text-muted">Edit</a></small>{% endif %}</h3>
+<div class="post_content row">
+  <div class="panel panel-default">
 
-{{ post.content|safe }}
-
+      <h3 style="color:#428bca">{{ post.title }} {% if request.user in blog.authors.all %}<small><a href="{% url 'edit' blog_slug=blog.slug post_slug=post.slug %}" class="text-muted">Edit</a></small>{% endif %}</h3>
+    <div class="panel-body">
+      {{ post.content|safe }}
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block javascript %}

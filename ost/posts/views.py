@@ -5,7 +5,9 @@ from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
 from blogs.views import blog as blog_view
 from blogs.models import Blog, Post
+from taggit.models import Tag
 from .forms import PostForm
+from .utils import wrap_tags, wrap_plain
 
 
 def index(request, slug):
@@ -58,7 +60,7 @@ def dashboard(request, slug):
         raise PermissionDenied
 
     context = {}
-    posts = Post.objects.filter(blog=blog)
+    posts = Post.objects.filter(blog=blog).order_by('-date_created')
     context['blog'] = blog
     context['posts'] = posts
     return render(request, "posts/dashboard.html", context)
@@ -77,6 +79,7 @@ def post(request, blog_slug, post_slug):
         return HttpResponseRedirect(
             reverse('blog', kwargs={'slug': blog.slug}))
 
+    wrap_tags(post)  # Wrap the tags with blog info
     context = {}
     context['blog'] = blog
     context['post'] = post
@@ -114,3 +117,25 @@ def edit(request, blog_slug, post_slug):
     context['blog'] = blog
     context['form'] = form
     return render(request, "posts/edit.html", context)
+
+
+def tag(request, blog_slug, tag_slug):
+    try:
+        blog = Blog.objects.get(slug=blog_slug)
+    except:
+        return HttpResponseRedirect(
+            reverse('blog', kwargs={'slug': blog.slug}))
+    context = {}
+    try:
+        tag = Tag.objects.get(slug=tag_slug)
+    except:
+        tag = None
+    context['tag'] = tag
+    if tag:
+        posts = Post.objects.filter(tags=tag, blog=blog)
+        posts = posts.order_by('-date_created')
+        wrap_plain(posts)
+    else:
+        posts = None
+    context['posts'] = posts
+    return render(request, "posts/tag.html", context)

@@ -1,10 +1,10 @@
-from bs4 import BeautifulSoup
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from .models import Blog, Post
 from .forms import BlogCreationForm
+from posts.utils import wrap_plain, wrap_tags
 
 
 @login_required
@@ -54,9 +54,10 @@ def blog(request, slug):
         blog = None
     context['blog'] = blog
     if blog:
-        posts = Post.objects.filter(blog=blog)
+        posts = Post.objects.filter(blog=blog).order_by('-date_created')
+        wrap_plain(posts)
         for post in posts:
-            post.plain = BeautifulSoup(post.content).get_text()
+            wrap_tags(post)  # Wrap the tags with blog info
         context['posts'] = posts
     return render(request, "posts/index.html", context)
 

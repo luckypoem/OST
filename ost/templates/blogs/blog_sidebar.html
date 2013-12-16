@@ -5,12 +5,14 @@
     <li class="list-group-item list-group-header"><h3 class="list-group-header" style="color:#fff">Blog{% include "blogs/blog/status.html" %}</h3></li>
     {% if blog %}
       {% if request.user == blog.creator %}
+        <a class="list-group-item" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
         <a class="list-group-item" href="{% url 'settings' slug=blog.slug %}">Settings</a>
-        <a class="list-group-item" href="{% url 'posts:create' slug=blog.slug %}">Post</a>
         <a class="list-group-item" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
+        <a class="list-group-item" href="{% url 'posts:create' slug=blog.slug %}">Create Post</a>
       {% elif request.user in blog.authors.all %}
-        <a class="list-group-item" href="{% url 'posts:create' slug=blog.slug %}">Post</a>
+        <a class="list-group-item" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
         <a class="list-group-item" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
+        <a class="list-group-item success" href="{% url 'posts:create' slug=blog.slug %}">Create Post</a>
       {% else %}
         <a class="list-group-item" href="{% url 'settings' slug=blog.slug %}">Follow</a>
       {% endif %}

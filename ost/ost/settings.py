@@ -105,6 +105,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'pagination_bootstrap.middleware.PaginationMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -139,8 +140,10 @@ INSTALLED_APPS = (
     'ckeditor',
     'missing',
     'south',
+    'pagination_bootstrap',
     'taggit',
     'blogs',
+    'posts',
 
 )
 
@@ -195,3 +198,4 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+#PAGINATION_INVALID_PAGE_RAISES_404 = True

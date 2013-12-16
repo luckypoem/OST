@@ -1,0 +1,21 @@
+{% extends "fluid.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static "css/digg.css" %}">
+{% endblock %}
+{% block title %}{% if tag %}{{ tag.name }}{% else %}Oops. This Tag Does Not Exist.{% endif %}{% endblock %}
+{% block sidebar %}
+  {% include "blogs/blog_sidebar.html" %}
+{% endblock %}
+{% block content %}
+  {% if tag %}
+    <h3 style="color:#428bca">Posts Tagged With &ldquo;{{ tag.name }}&rdquo; in {{ blog.name }}</h3>
+  {% else %}
+    <h3 style="color:#428bca">Oops. This Tag Does Not Exist.</h3>
+  {% endif %}
+  {% if tag and posts %}
+    {% include "posts/aggregate.html" %}
+  {% else %}
+    <p>No posts are tagged.</p>
+  {% endif %}
+{% endblock %}
