@@ -116,6 +116,10 @@ def edit(request, blog_slug, post_slug):
         'tags': ','.join([t.name for t in post.tags.all()]),
     }
     if request.method == 'POST':
+        if request.POST.get('submit') == 'delete':
+            post.delete()
+            return HttpResponseRedirect(
+                reverse('blog', kwargs={'slug': blog.slug}))
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
@@ -143,7 +147,7 @@ def tag(request, blog_slug, tag_slug):
     except:
         return HttpResponseRedirect(
             reverse('blog', kwargs={'slug': blog.slug}))
-    context = {}
+    context = {'blog': blog}
     try:
         tag = Tag.objects.get(slug=tag_slug)
     except:

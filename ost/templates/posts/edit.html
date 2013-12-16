@@ -36,8 +36,9 @@
     </div>
   </div>
   <div class="form-group">
-    <button class="btn btn-large btn-primary" type="submit">Save</button>
-    <a href="{% url 'post' blog_slug=blog.slug post_slug=form.instance.slug %}" class="btn btn-danger" role="button">Cancel</a>
+    <button class="btn btn-large btn-primary" type="submit" value="save">Save</button>
+    <a href="{% url 'post' blog_slug=blog.slug post_slug=form.instance.slug %}" class="btn btn-info" role="button">Cancel</a>
+    <button name="submit" id="delete-button" class="btn btn-large btn-danger" type="submit" value="delete">Delete</button>
   </div>
   </form>
 </div>
@@ -49,4 +50,9 @@
   <script src="{% static 'bootstrap-tagsinput/dist/bootstrap-tagsinput.js' %}"></script>
   
   {% include "posts/js/tags.html" %}
+  <script>
+  $('#delete-button').click(function(){
+    return confirm('Are you sure to delete this post?');
+  }); 
+  </script>
 {% endblock %}

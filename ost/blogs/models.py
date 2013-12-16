@@ -28,7 +28,8 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200)
     content = RichTextField(blank=True)
-    tags = TaggableManager()  # Automatically store comma-separated tags
+    # Automatically store comma-separated tags
+    tags = TaggableManager(blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 

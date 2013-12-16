@@ -1,9 +1,32 @@
 {% extends "blogs/base.html" %}
-{% block title %}Blogs{% endblock %}
+{% load static %}
+{% load pagination_tags %}
+{% block title %}Your Blogs{% endblock %}
 {% block content %}
-
+{% autopaginate blogs 5 %}
 <h3 style="color:#428bca">Your Blogs</h3>
-{% for blog in blogs %}
-  <a href="{% url 'blog' slug=blog.slug %}">{{ blog.name }}</a>
-{% endfor %}
+<p class="text-muted">Edit Posts<p>
+<div class="col-md-12">
+  <table class="table">
+    <tr>
+      <th>Blog</th>
+      <th>Creator</th>
+      <th>Authors</th>
+    </tr>
+  {% for blog in blogs %}
+    <tr>
+      <td><a href="{% url 'blog' slug=blog.slug %}">{{ blog.name }}</a></td>
+      <td nowrap><small class="text-muted"><a href="{% url 'accounts:page' username=blog.creator.username %}">{{ blog.creator.username }}</a></small></td>
+      <td nowrap><small class="text-muted">{{ blog.authors.all|join:", " }}</small></td>
+    </tr>
+  {% empty %}
+    {% if invalid_page %}
+      <p>Invalid page.</p>
+    {% else %}
+        You haven't created any blogs.
+    {% endif %}
+  {% endfor %}
+  </table>
+  {% paginate %}
+</div>
 {% endblock %}

@@ -13,8 +13,9 @@ def wrap_tags(post):
     tags = []
     for tag in post.tags.all():
         t = {
-            'slug': tag.slug,
-            'blog': post.blog.slug,
+            'name': tag.name,
+            'tag_slug': tag.slug,
+            'blog_slug': post.blog.slug,
         }
         tags.append(t)
     post.wrapped_tags = tags

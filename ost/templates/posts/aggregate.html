@@ -1,4 +1,5 @@
 {% load pagination_tags %}
+{% load wrap_tags %}
 {% autopaginate posts 5 %}
 {% for post in posts %}
   <div class="panel panel-default">
@@ -26,7 +27,7 @@
       {% if post.tags.all %}
       <div class="row">
         <div class="col-md-10">
-          <small>Tagged with {{ post.tags.all|join:", " }}</small>
+          <small>Tagged with {{ post.wrapped_tags|join_tag_link:", "|safe }}</small>
         </div>
       </div>
       {% endif %}

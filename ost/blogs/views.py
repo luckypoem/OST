@@ -66,6 +66,8 @@ def blog(request, slug):
         for post in posts:
             wrap_tags(post)  # Wrap the tags with blog info
         context['posts'] = posts
+    num_posts = Post.objects.filter(blog=blog).count()
+    context['num_posts'] = num_posts
     return render(request, "posts/index.html", context)
 
 

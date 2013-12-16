@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
   {% if blog %}
-    <h3 style="color:#428bca">{{ blog.name }}</h3>
+    <h3 style="color:#428bca">{{ blog.name }} <small>({{ num_posts }} posts)</small></h3>
     {% if posts %}
       {% include "posts/aggregate.html" %}
     {% else %}

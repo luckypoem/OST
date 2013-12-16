@@ -2,7 +2,7 @@
 {% block title %}Create Blog{% endblock %}
 {% block content %}
 <h3 style="color:#428bca">Create Blog</h3>
-<div class="col-md-6">
+<div class="col-md-8">
   <form class="form-horizontal" method="post" action="{% url 'blogs:create' %}">
 {% if form.errors %}
   {{ form.non_field_errors }}
@@ -11,11 +11,16 @@
   <div class="form-group">
     <label for="id_name" class="col-md-4 control-label">Name</label>
     {{ form.name.errors }}
-    <div class="col-md-6">
+    <div class="col-md-8">
     <input name="name" id="id_name" type="text" class="form-control" placeholder="{{ form.name.label }}" required autofocus>
     </div>
   </div>
-  <button class="btn btn-large btn-primary" type="submit">Create</button>
+  <div class="form-group">
+    <div class="col-md-8 col-md-offset-2">
+      <button class="btn btn-large btn-primary" type="submit">Create</button>
+    </div>
+  </div>
+
   </form>
 </div>
 {% endblock %}
