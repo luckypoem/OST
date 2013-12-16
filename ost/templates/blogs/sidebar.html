@@ -1,8 +1,10 @@
 {% url 'blogs:create' as blogs_create_url %}
 {% url 'blogs:following' as blogs_following_url %}
+{% url 'blogs:index' as blogs_url %}
 <div style="margin: 1em 0">
   <div class="list-group">
     <li class="list-group-item list-group-header"><h3 class="list-group-header" style="color:#fff">Blogs</h3></li>
+    <a class="list-group-item {% if request.path == blogs_url %}active{% endif %}" href="{% url 'blogs:index' %}">Your Blogs</a>
     <a class="list-group-item {% if request.path == blogs_create_url %}active{% endif %}" href="{% url 'blogs:create' %}">Create</a>
     <a class="list-group-item {% if request.path == blogs_following_url %}active{% endif %}" href="{% url 'blogs:following' %}">Following</a>
   </div>

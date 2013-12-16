@@ -1,6 +1,7 @@
 {% extends "posts/base.html" %}
 {% load static %}
 {% load wrap_links %}
+{% load tz %}
 {% block css %}
 {% endblock %}
 {% block title %}{{ post.title }} - {{ blog.name }}{% endblock %}
@@ -20,10 +21,10 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <small>Created: {{ post.date_created }}</small>
+          <small>Created: {{ post.date_created|timezone:"America/New_York" }} (EST)</small>
         </div>
         <div class="col-md-6">
-          <small>Last Modified: {{ post.date_modified }}</small>
+          <small>Last Modified: {{ post.date_modified|timezone:"America/New_York" }} (EST)</small>
         </div>
       </div>
       {% if post.tags.all %}

@@ -1,5 +1,6 @@
 {% load pagination_tags %}
 {% load wrap_links %}
+{% load tz %}
 {% autopaginate posts %}
 {% for post in posts %}
   <div class="panel panel-default">
@@ -21,7 +22,7 @@
           <small>Created: {{ post.date_created }}</small>
         </div>
         <div class="col-md-6">
-          <small>Last Modified: {{ post.date_modified }}</small>
+          <small>Last Modified: {{ post.date_modified|timezone:"America/New_York" }} (EST)</small>
         </div>
       </div>
       {% if post.tags.all %}

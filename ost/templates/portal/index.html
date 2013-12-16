@@ -7,6 +7,7 @@
 {% endblock %}
 {% load pagination_tags %}
 {% load wrap_links %}
+{% load tz %}
 {% block content %}
 {% autopaginate posts %}
 {% if not request.user.is_authenticated %}
@@ -42,10 +43,10 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          <small>Created: {{ post.date_created }}</small>
+          <small>Created: {{ post.date_created|timezone:"America/New_York" }} (EST)</small>
         </div>
         <div class="col-md-6">
-          <small>Last Modified: {{ post.date_modified }}</small>
+          <small>Last Modified: {{ post.date_modified|timezone:"America/New_York" }} (EST)</small>
         </div>
       </div>
       {% if post.tags.all %}

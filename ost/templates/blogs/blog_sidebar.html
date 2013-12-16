@@ -17,10 +17,12 @@
         <a class="list-group-item success {% if request.path == create_url %}active{% endif %}" href="{% url 'posts:create' slug=blog.slug %}">Create Post</a>
       {% else %}
         <a class="list-group-item {% if request.path == blog_url %}active{% endif %}" href="{% url 'blog' slug=blog.slug %}" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
-        {% if request.user.is_follower %}
-          <a href="#" id="unfollow-button" class="list-group-item">Unfollow This Blog</a>
-        {% else %}
-          <a href="#" id="follow-button" class="list-group-item">Follow This Blog</a>
+        {% if request.user.is_authenticated %}
+          {% if request.user.is_follower %}
+            <a href="#" id="unfollow-button" class="list-group-item">Unfollow This Blog</a>
+          {% else %}
+            <a href="#" id="follow-button" class="list-group-item">Follow This Blog</a>
+          {% endif %}
         {% endif %}
       {% endif %}
     {% else %}
