@@ -18,6 +18,9 @@ class Blog(models.Model):
         self.slug = uuslug(self.name, instance=self)
         super(Blog, self).save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('blog', args=(self.slug,))
+
     def __unicode__(self):
         return self.slug
 

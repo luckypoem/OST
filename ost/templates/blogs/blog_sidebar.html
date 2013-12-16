@@ -1,20 +1,27 @@
-{% url 'blogs:create' as blogs_create_url %}
-{% url 'blogs:following' as blogs_following_url %}
+{% url 'blog' slug=blog.slug as blog_url %}
+{% url 'posts:create' slug=blog.slug as create_url %}
+{% url 'posts:dashboard' slug=blog.slug as dashboard_url %}
+{% url 'settings' slug=blog.slug as settings_url %}
 <div style="margin: 1em 0">
   <div class="list-group">
     <li class="list-group-item list-group-header"><h3 class="list-group-header" style="color:#fff">Blog{% include "blogs/blog/status.html" %}</h3></li>
     {% if blog %}
       {% if request.user == blog.creator %}
-        <a class="list-group-item" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
-        <a class="list-group-item" href="{% url 'settings' slug=blog.slug %}">Settings</a>
-        <a class="list-group-item" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
-        <a class="list-group-item" href="{% url 'posts:create' slug=blog.slug %}">Create Post</a>
+        <a class="list-group-item {% if request.path == blog_url %}active{% endif %}" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
+        <a class="list-group-item {% if request.path == settings_url %}active{% endif %}" href="{% url 'settings' slug=blog.slug %}">Settings</a>
+        <a class="list-group-item {% if request.path == dashboard_url %}active{% endif %}" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
+        <a class="list-group-item {% if request.path == create_url %}active{% endif %}" href="{% url 'posts:create' slug=blog.slug %}">Create Post</a>
       {% elif request.user in blog.authors.all %}
-        <a class="list-group-item" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
-        <a class="list-group-item" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
-        <a class="list-group-item success" href="{% url 'posts:create' slug=blog.slug %}">Create Post</a>
+        <a class="list-group-item {% if request.path == blog_url %}active{% endif %}" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
+        <a class="list-group-item {% if request.path == dashboard_url %}active{% endif %}" href="{% url 'posts:dashboard' slug=blog.slug %}">Dashboard</a>
+        <a class="list-group-item success {% if request.path == create_url %}active{% endif %}" href="{% url 'posts:create' slug=blog.slug %}">Create Post</a>
       {% else %}
-        <a class="list-group-item" href="{% url 'settings' slug=blog.slug %}">Follow</a>
+        <a class="list-group-item {% if request.path == blog_url %}active{% endif %}" href="{% url 'posts:create' slug=blog.slug %}" href="{% url 'blog' slug=blog.slug %}">All Posts</a>
+        {% if request.user.is_follower %}
+          <a href="#" id="unfollow-button" class="list-group-item">Unfollow This Blog</a>
+        {% else %}
+          <a href="#" id="follow-button" class="list-group-item">Follow This Blog</a>
+        {% endif %}
       {% endif %}
     {% else %}
       <a class="list-group-item" href="{% url 'blogs:create' %}">Create</a>

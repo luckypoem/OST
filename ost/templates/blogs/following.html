@@ -1,0 +1,12 @@
+{% extends "blogs/base.html" %}
+{% load static %}
+{% load pagination_tags %}
+{% block title %}Following Blogs{% endblock %}
+{% block content %}
+  <h3 style="color:#428bca">All Posts From Your Following Blogs</small></h3>
+  {% if posts %}
+    {% include "posts/aggregate.html" %}
+  {% else %}
+    <p>This blog has no posts.</p>
+  {% endif %}
+{% endblock %}

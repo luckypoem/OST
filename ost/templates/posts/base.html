@@ -2,3 +2,46 @@
 {% block sidebar %}
   {% include "blogs/blog_sidebar.html" %}
 {% endblock %}
+{% block javascript %}
+<script>
+var follow_url = "{% url 'follow' slug=blog.slug %}";
+var unfollow_url = "{% url 'unfollow' slug=blog.slug %}";
+
+
+$(document).on("click", '#follow-button', function() { 
+  $.post(follow_url, {}, function(data){
+    if (data.success){
+      var button = $('#follow-button');
+      button.attr('id', 'unfollow-button');
+      button.html('Unfollow This Blog');
+      $('#follow-status').html("(Following)");
+    }
+    else
+      alert(data.message)
+  });
+});
+
+
+$(document).on("click", '#unfollow-button', function() { 
+  $.post(unfollow_url, {}, function(data){
+    if (data.success){
+      var button = $('#unfollow-button');
+      button.attr('id', 'follow-button');
+      button.html('Follow This Blog');
+      $('#follow-status').html("");
+    }
+
+    else
+      alert(data.message)
+  });
+});
+
+$("img").each(function() {
+    // Ensure images are not oversized
+    $(this).removeAttr('style');
+    $(this).css("max-width", "100%");
+});
+</script>
+
+  {% include "ajax_token.html" %}
+{% endblock %}

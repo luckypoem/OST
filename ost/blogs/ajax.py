@@ -104,6 +104,7 @@ def follow(request, slug):
 
     try:
         blog = Blog.objects.get(slug=slug)
+        print blog
     except:
         return HttpResponse(json.dumps(data), content_type="application/json")
 
@@ -112,9 +113,10 @@ def follow(request, slug):
         data["message"] = "You cannot follow your blog."
         return HttpResponse(json.dumps(data), content_type="application/json")
 
-    blog.authors.add(request.user)
+    blog.followers.add(request.user)
     data["code"] = 0
     data["success"] = True
+    del data["message"]
     return HttpResponse(json.dumps(data), content_type="application/json")
 
 
@@ -138,12 +140,12 @@ def unfollow(request, slug):
         return HttpResponse(json.dumps(data), content_type="application/json")
 
     if request.user not in blog.followers.all():
-        blog.authors.add(request.user)
         data["code"] = 4
         data["message"] = "You haven't follow this blog yet."
         return HttpResponse(json.dumps(data), content_type="application/json")
 
-    blog.authors.remove(request.user)
+    blog.followers.remove(request.user)
     data["code"] = 0
     data["success"] = True
+    del data["message"]
     return HttpResponse(json.dumps(data), content_type="application/json")

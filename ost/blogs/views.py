@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Blog, Post
 from .forms import BlogCreationForm
 from posts.utils import wrap_plain, wrap_tags
+from .utils import is_follower
 
 
 @login_required
@@ -49,7 +50,13 @@ def create(request):
 
 @login_required
 def following(request):
-    return None
+    blogs = Blog.objects.filter(followers=request.user)
+    posts = Post.objects.filter(blog__in=blogs).order_by('-date_created')
+    wrap_plain(posts)
+    context = {
+        'posts': posts
+    }
+    return render(request, "blogs/following.html", context)
 
 
 def blog(request, slug):
@@ -68,6 +75,7 @@ def blog(request, slug):
         context['posts'] = posts
     num_posts = Post.objects.filter(blog=blog).count()
     context['num_posts'] = num_posts
+    request.user.is_follower = is_follower(request.user, blog)
     return render(request, "posts/index.html", context)
 
 

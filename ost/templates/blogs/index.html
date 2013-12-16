@@ -8,11 +8,13 @@
 <p class="text-muted">Edit Posts<p>
 <div class="col-md-12">
   <table class="table">
+    {% if not invalid_page and blogs %}
     <tr>
       <th>Blog</th>
       <th>Creator</th>
       <th>Authors</th>
     </tr>
+    {% endif %}
   {% for blog in blogs %}
     <tr>
       <td><a href="{% url 'blog' slug=blog.slug %}">{{ blog.name }}</a></td>

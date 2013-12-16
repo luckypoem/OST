@@ -8,6 +8,7 @@ from blogs.models import Blog, Post
 from taggit.models import Tag
 from .forms import PostForm
 from .utils import wrap_tags, wrap_plain
+from blogs.utils import is_follower
 
 
 def index(request, slug):
@@ -90,6 +91,7 @@ def post(request, blog_slug, post_slug):
     context = {}
     context['blog'] = blog
     context['post'] = post
+    request.user.is_follower = is_follower(request.user, blog)
     return render(request, "posts/post.html", context)
 
 
@@ -114,6 +116,7 @@ def edit(request, blog_slug, post_slug):
     initial = {
         'title': post.title,
         'tags': ','.join([t.name for t in post.tags.all()]),
+        'content': post.content,
     }
     if request.method == 'POST':
         if request.POST.get('submit') == 'delete':
@@ -160,4 +163,5 @@ def tag(request, blog_slug, tag_slug):
     else:
         posts = None
     context['posts'] = posts
+    request.user.is_follower = is_follower(request.user, blog)
     return render(request, "posts/tag.html", context)

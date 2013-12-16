@@ -1,5 +1,6 @@
 {% extends "posts/base.html" %}
 {% load static %}
+{% load wrap_tags %}
 {% block css %}
 {% endblock %}
 {% block title %}{{ post.title }} - {{ blog.name }}{% endblock %}
@@ -28,15 +29,11 @@
       {% if post.tags.all %}
       <div class="row">
         <div class="col-md-10">
-          <small>Tagged with {{ post.tags.all|join:", " }}</small>
+          <small>Tagged with {{ post.wrapped_tags|join_tag_link:", "|safe }}</small>
         </div>
       </div>
       {% endif %}
     </div>
   </div>
 </div>
-{% endblock %}
-
-{% block javascript %}
-  
 {% endblock %}

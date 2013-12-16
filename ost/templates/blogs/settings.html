@@ -51,6 +51,7 @@
 </div>
 {% endblock %}
 {% block javascript %}
+  {{ block.super }}
   <script src="{% static 'sprintf/src/sprintf.js' %}"></script>
   <script src="{% static 'typeahead.js/dist/typeahead.min.js' %}"></script>
   <script src="{% static 'hogan/web/builds/2.0.0/hogan-2.0.0.min.js' %}"></script>

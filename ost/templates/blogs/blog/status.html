@@ -3,4 +3,6 @@
 (Created)
 {% elif request.user in blog.authors.all %}
 (Authored)
+{% elif request.user.is_follower %}
+<span id="follow-status">(Following)</span>
 {% endif %}
