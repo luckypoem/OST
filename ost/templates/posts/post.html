@@ -1,6 +1,6 @@
 {% extends "posts/base.html" %}
 {% load static %}
-{% load wrap_tags %}
+{% load wrap_links %}
 {% block css %}
 {% endblock %}
 {% block title %}{{ post.title }} - {{ blog.name }}{% endblock %}
@@ -9,7 +9,7 @@
 <div class="post_content row">
   <div class="panel panel-default">
 
-      <h3 style="color:#428bca; margin:0.5em">{{ post.title }} {% if request.user in blog.authors.all %}<small><a href="{% url 'edit' blog_slug=blog.slug post_slug=post.slug %}" class="text-muted">Edit</a></small>{% endif %}</h3><span class="text-muted" style="margin:1em">By <a href="{% url 'accounts:page' username=post.author.username %}">{{ post.author }}</a></span>
+      <h3 style="color:#428bca; margin:0.5em">{{ post.title }} {% if request.user == post.author %}<small><a href="{% url 'edit' blog_slug=blog.slug post_slug=post.slug %}" class="text-muted">Edit</a></small>{% endif %}</h3><span class="text-muted" style="margin:1em">By <a href="{% url 'accounts:page' username=post.author.username %}">{{ post.author }}</a></span>
     <div class="panel-body">
       {{ post.content|safe }}
     </div>

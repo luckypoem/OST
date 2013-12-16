@@ -53,6 +53,8 @@ def following(request):
     blogs = Blog.objects.filter(followers=request.user)
     posts = Post.objects.filter(blog__in=blogs).order_by('-date_created')
     wrap_plain(posts)
+    for post in posts:
+        wrap_tags(post)
     context = {
         'posts': posts
     }

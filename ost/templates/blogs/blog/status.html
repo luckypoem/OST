@@ -5,4 +5,6 @@
 (Authored)
 {% elif request.user.is_follower %}
 <span id="follow-status">(Following)</span>
+{% else %}
+<span id="follow-status"></span>
 {% endif %}

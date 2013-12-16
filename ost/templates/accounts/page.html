@@ -1,5 +1,6 @@
 {% extends "accounts/base.html" %}
-{% block title %}Profile{% endblock %}
+{% load wrap_links %}
+{% block title %}{{ user.username }}{% endblock %}
 {% block content %}
 
 <h3 style="color:#428bca">{{ user.username }}</h3>
@@ -11,6 +12,8 @@
     <dd>{{ user.email }}</dd>
     <dt>Date joined</dt>
     <dd>{{ user.date_joined }}</dd>
+    <dt>Blogs authored</dt>
+    <dd>{{ user.authored_blogs.all|join_name_link:", "|safe }}</dd>
   </dl>
 </div>
 

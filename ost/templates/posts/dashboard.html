@@ -8,11 +8,11 @@
 <p class="text-muted">Edit Posts<p>
 <div class="col-md-12">
   <table class="table">
-    {% if not invalid_page and blogs %}
+    {% if not invalid_page and blog %}
     <tr>
       <th>Post</th>
       <th>Author</th>
-      <th>Modification Time</th>
+      <th>Creation Time</th>
     </tr>
     {% endif %}
   {% for post in posts %}

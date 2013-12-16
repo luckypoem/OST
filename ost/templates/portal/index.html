@@ -6,7 +6,7 @@
   {# Override '- project_name'#}
 {% endblock %}
 {% load pagination_tags %}
-{% load wrap_tags %}
+{% load wrap_links %}
 {% block content %}
 {% autopaginate posts %}
 {% if not request.user.is_authenticated %}

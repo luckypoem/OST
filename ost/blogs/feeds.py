@@ -26,7 +26,7 @@ class LatestPostsFeed(Feed):
         return obj.name
 
     def author_name(self, obj):
-        return '%s %s' % (obj.creator.first_name, obj.creator.last_name)
+        return obj.creator.username
 
     def author_email(self, obj):
         return obj.creator.email
@@ -42,7 +42,7 @@ class LatestPostsFeed(Feed):
         return plain
 
     def item_author_name(self, item):
-        return '%s %s' % (item.author.first_name, item.author.last_name)
+        return item.author.username
 
     def item_author_email(self, item):
         return item.author.email

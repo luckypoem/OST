@@ -68,7 +68,8 @@ def dashboard(request, slug):
         raise PermissionDenied
 
     context = {}
-    posts = Post.objects.filter(blog=blog).order_by('-date_created')
+    posts = Post.objects.filter(blog=blog, author=request.user)
+    posts = posts.order_by('-date_created')
     context['blog'] = blog
     context['posts'] = posts
     return render(request, "posts/dashboard.html", context)
@@ -109,7 +110,7 @@ def edit(request, blog_slug, post_slug):
         return HttpResponseRedirect(
             reverse('blog', kwargs={'slug': blog.slug}))
 
-    if request.user not in blog.authors.all():
+    if request.user != post.author:
         raise PermissionDenied
 
     context = {}
@@ -160,6 +161,8 @@ def tag(request, blog_slug, tag_slug):
         posts = Post.objects.filter(tags=tag, blog=blog)
         posts = posts.order_by('-date_created')
         wrap_plain(posts)
+        for post in posts:
+            wrap_tags(post)
     else:
         posts = None
     context['posts'] = posts

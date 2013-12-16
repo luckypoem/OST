@@ -1,4 +1,5 @@
 {% extends "accounts/base.html" %}
+{% load wrap_links %}
 {% block title %}Profile{% endblock %}
 {% block content %}
 
@@ -11,10 +12,8 @@
     <dd>{{ request.user.email }}</dd>
     <dt>Date joined</dt>
     <dd>{{ request.user.date_joined }}</dd>
-    {% if social_auth %}
-      <dt>Social account</dt>
-      <dd>{{ social_auth.provider|capfirst }}</dd>
-    {% endif %}
+    <dt>Blogs authored</dt>
+    <dd>{{ request.user.authored_blogs.all|join_name_link:", "|safe }}</dd>
   </dl>
 </div>
 
