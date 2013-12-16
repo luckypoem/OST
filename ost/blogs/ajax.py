@@ -91,3 +91,59 @@ def authors(request, slug):
         del data["message"]
         print data
         return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+@login_required
+@require_POST
+def follow(request, slug):
+    data = {
+        "success": False,
+        "code": 1,
+        "message": "This blog does not exist.",
+    }
+
+    try:
+        blog = Blog.objects.get(slug=slug)
+    except:
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+    if request.user in blog.authors.all():
+        data["code"] = 2
+        data["message"] = "You cannot follow your blog."
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+    blog.authors.add(request.user)
+    data["code"] = 0
+    data["success"] = True
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+@login_required
+@require_POST
+def unfollow(request, slug):
+    data = {
+        "success": False,
+        "code": 1,
+        "message": "This blog does not exist.",
+    }
+
+    try:
+        blog = Blog.objects.get(slug=slug)
+    except:
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+    if request.user in blog.authors.all():
+        data["code"] = 3
+        data["message"] = "You cannot unfollow your blog."
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+    if request.user not in blog.followers.all():
+        blog.authors.add(request.user)
+        data["code"] = 4
+        data["message"] = "You haven't follow this blog yet."
+        return HttpResponse(json.dumps(data), content_type="application/json")
+
+    blog.authors.remove(request.user)
+    data["code"] = 0
+    data["success"] = True
+    return HttpResponse(json.dumps(data), content_type="application/json")

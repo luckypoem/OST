@@ -5,14 +5,53 @@
 {% block sitename %}
   {# Override '- project_name'#}
 {% endblock %}
+{% load pagination_tags %}
+{% load wrap_tags %}
 {% block content %}
-  <!-- Main component for a primary marketing message or call to action -->
-  <div class="jumbotron">
-    <h1>Navbar example</h1>
-    <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-    <p>To see the difference between static and fixed top navbars, just scroll.</p>
-    <p>
-      <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-    </p>
+{% autopaginate posts 5 %}
+{% for post in posts %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="row">
+        <div class="col-md-8">
+          <h4><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h4>
+        </div>
+        <div class="col-md-4">
+          <small class="pull-right">From <a href="{% url 'blog' slug=post.blog.slug %}">{{ post.blog }}</a></small><br/>
+          <small class="pull-right">By <a href="{% url 'accounts:page' username=post.author.username %}">{{ post.author.username }}</a></small>
+        </div>
+      </div>
+    </div>
+    <div class="panel-body">
+      {{ post.plain|truncatechars:500|linebreaks }}
+      <a href="{{ post.get_absolute_url }}">Continue</a>
+    </div>
+    <div class="panel-footer text-muted">
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <small>Created: {{ post.date_created }}</small>
+        </div>
+        <div class="col-md-6">
+          <small>Last Modified: {{ post.date_modified }}</small>
+        </div>
+      </div>
+      {% if post.tags.all %}
+      <div class="row">
+        <div class="col-md-10">
+          <small>Tagged with {{ post.wrapped_tags|join_tag_link:", "|safe }}</small>
+        </div>
+      </div>
+      {% endif %}
+    </div>
   </div>
+{% empty %}
+  {% if invalid_page %}
+    <p>Invalid page.</p>
+  {% endif %}
+{% endfor %}
+{% paginate %}
 {% endblock %}

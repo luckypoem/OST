@@ -19,10 +19,10 @@ urlpatterns = patterns('',
         name='settings'),
     url(r'^blog/(?P<slug>[\w.@+-]+)/query/authors/$', 'blogs.ajax.authors',
         name='authors'),  # Ajax
-    url(r'^blog/(?P<slug>[\w.@+-]+)/follow/$', 'blogs.views.follow',
-        name='follow'),
-    url(r'^blog/(?P<slug>[\w.@+-]+)/follow/$', 'blogs.views.unfollow',
-        name='unfollow'),
+    url(r'^blog/(?P<slug>[\w.@+-]+)/follow/$', 'blogs.ajax.follow',
+        name='follow'),  # Ajax
+    url(r'^blog/(?P<slug>[\w.@+-]+)/unfollow/$', 'blogs.ajax.unfollow',
+        name='unfollow'),  # Ajax
     url(r'^blog/(?P<slug>[\w.@+-]+)/posts/',
         include('posts.urls', namespace='posts')),
     url(r'^blog/(?P<blog_slug>[\w.@+-]+)/post/(?P<post_slug>[\w.@+-]+)/$',

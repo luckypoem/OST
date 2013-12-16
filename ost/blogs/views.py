@@ -98,13 +98,3 @@ def settings(request, slug):
     context['form'] = form
     context['blog'] = blog
     return render(request, "blogs/settings.html", context)
-
-
-@login_required
-def follow(request):
-    pass
-
-
-@login_required
-def unfollow(request):
-    pass
