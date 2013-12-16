@@ -13,9 +13,9 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         {% if request.path|startswith:"/blog/" and blog %}
-        <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'search' slug=blog.slug %}">
+        <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'search' slug=blog.slug %}" >
           <div class="form-group">
-            <input name="query" type="text" class="form-control" placeholder="Search This Blog">
+            <input name="query" type="text" class="form-control" placeholder="Search This Blog" value="{{ request.GET.query }}">
           </div>
           <button type="submit" class="btn btn-info">Search</button>
         </form>
