@@ -12,7 +12,7 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        {% if request.path|startswith:"/blog/" %}
+        {% if request.path|startswith:"/blog/" and blog %}
         <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'search' slug=blog.slug %}">
           <div class="form-group">
             <input name="query" type="text" class="form-control" placeholder="Search This Blog">

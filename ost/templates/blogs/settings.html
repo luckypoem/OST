@@ -45,6 +45,7 @@
   <div class="form-group">
     <div class="col-md-8 col-md-offset-2">
       <button class="btn btn-large btn-primary" type="submit">Save</button>
+      <button name="submit" id="delete-button" class="btn btn-large btn-danger" type="submit" value="delete">Delete</button>
     </div>
   </div>
   </form>
@@ -57,4 +58,9 @@
   <script src="{% static 'hogan/web/builds/2.0.0/hogan-2.0.0.min.js' %}"></script>
   {% include "blogs/js/authors.html" %}
   {% include "ajax_token.html" %}
+  <script>
+  $('#delete-button').click(function(){
+    return confirm('Are you sure to delete this blog? All the posts from this blog will be deleted too.');
+  }); 
+  </script>
 {% endblock %}

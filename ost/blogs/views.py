@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from .models import Blog, Post
 from .forms import BlogCreationForm
@@ -67,7 +69,7 @@ def blog(request, slug):
     try:
         blog = Blog.objects.get(slug=slug)
     except:
-        blog = None
+        raise Http404
     context['blog'] = blog
     if blog:
         posts = Post.objects.filter(blog=blog).order_by('-date_created')
@@ -77,7 +79,8 @@ def blog(request, slug):
         context['posts'] = posts
     num_posts = Post.objects.filter(blog=blog).count()
     context['num_posts'] = num_posts
-    request.user.is_follower = is_follower(request.user, blog)
+    if request.user.is_authenticated() and blog:
+        request.user.is_follower = is_follower(request.user, blog)
     return render(request, "posts/index.html", context)
 
 
@@ -87,10 +90,16 @@ def settings(request, slug):
         blog = Blog.objects.get(slug=slug)
     except:
         return HttpResponseRedirect(
-            reverse('blog', kwargs={'slug': blog.slug}))
+            reverse('blog', kwargs={'slug': slug}))
     context = {}
+
+    if request.user != blog.creator:
+        raise PermissionDenied
+
     if request.method == 'POST':
-        print request.POST
+        if request.POST.get('submit') == 'delete':
+            blog.delete()
+            return HttpResponseRedirect(reverse('blogs:index'))
         form = BlogCreationForm(request.POST, instance=blog)
         if form.is_valid():
             form.save()
