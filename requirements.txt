@@ -10,6 +10,7 @@ django-ckeditor==4.0.2
 django-endless-pagination==2.0
 django-haystack==2.1.0
 django-missing==0.1.11
+django-pagination-bootstrap==1.0.5
 django-taggit==0.11.1
 django-taggit-templatetags==0.4.6dev
 django-templatetag-sugar==0.1
